@@ -1,0 +1,7 @@
+---
+# handlers file for php70
+
+- name: httpd restart
+  service:
+    name: httpd
+    state: restarted

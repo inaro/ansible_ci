@@ -1,0 +1,10 @@
+---
+# defaults file for mariadb
+
+mysql_root_password: root
+
+mysql_app_database_name: ansible
+mysql_test_database_name: test_ansible
+
+mysql_user_name: vagrant
+mysql_user_password: vagrant

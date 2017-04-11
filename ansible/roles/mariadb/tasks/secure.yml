@@ -1,0 +1,42 @@
+- name: root アカウントにパスワードを設定する
+  mysql_user:
+    name: root
+    host: "{{ item }}"
+    password: "{{ mysql_root_password }}"
+    priv: "*.*:ALL,GRANT"
+  with_items:
+    - "{{ ansible_hostname }}"
+    - 127.0.0.1
+    - ::1
+    - localhost
+  when: ansible_hostname != 'localhost'
+
+- name: root ユーザーとして簡単にアクセスできる設定を追加する
+  template:
+    src: .my.cnf.j2
+    dest: ~/.my.cnf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: anonymous ユーザーを削除する
+  mysql_user:
+    name: ''
+    host: "*"
+    state: absent
+
+- name: デフォルトで入っている test データベースを削除する
+  mysql_db:
+    name: test
+    state: absent
+  notify:
+    - restart mariadb
+
+- name: 3306番ポートを有効にする
+  firewalld:
+    zone: public
+    port: 3306/tcp
+    permanent: true
+    state: enabled
+  notify:
+  - restart mariadb

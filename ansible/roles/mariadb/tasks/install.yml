@@ -1,0 +1,13 @@
+- name: MySQLパッケージをインストールする
+  yum:
+    name: "{{ item }}"
+  with_items:
+    - mariadb
+    - mariadb-server
+    - MySQL-python
+
+- name: MySQLを起動し、自動起動設定を有効にする
+  service:
+    name: mariadb
+    state: started
+    enabled: true

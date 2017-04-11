@@ -1,0 +1,4 @@
+---
+# defaults file for httpd
+
+doc_root: /srv/httpd

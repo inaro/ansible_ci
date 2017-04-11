@@ -1,0 +1,27 @@
+---
+# tasks file for init
+
+- name: ファイアウォールを有効にする
+  service:
+    name: firewalld
+    state: started
+    enabled: true
+
+- name: yum をアップデートする
+  yum:
+    name: "*"
+    state: latest
+
+- name: 各種パッケージをインストールする
+  yum:
+    name: "{{ item }}"
+    state: installed
+  with_items:
+     - git
+     - curl
+     - gcc
+     - kernel-devel
+     - wget
+     - vim
+     - man
+     - unzip

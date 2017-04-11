@@ -1,0 +1,4 @@
+---
+# defaults file for php70
+
+composer_path: /usr/local/bin/composer

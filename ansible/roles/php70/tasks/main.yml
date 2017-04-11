@@ -1,0 +1,5 @@
+---
+# tasks file for php70
+
+- include: install.yml
+- include: configure.yml

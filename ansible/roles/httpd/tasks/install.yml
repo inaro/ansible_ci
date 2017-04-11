@@ -1,0 +1,6 @@
+- name: apache をインストールする
+  yum:
+    name: "{{ item }}"
+    state: installed
+  with_items:
+     - httpd

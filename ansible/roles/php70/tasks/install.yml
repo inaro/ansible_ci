@@ -1,0 +1,43 @@
+- name: epel をインストールする
+  yum:
+    name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+    state: installed
+
+- name: remi をインストールする
+  yum:
+    name: http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+    state: installed
+
+- name: yum をアップデートする
+  yum:
+    name: "*"
+    state: latest
+
+- name: PHP をインストールする
+  yum:
+    name: "{{ item }}"
+    enablerepo: remi,remi-php70
+    state: installed
+  with_items:
+    - php
+
+- name: PHP モジュールをインストールする
+  yum:
+    name: "{{ item }}"
+    enablerepo: remi,remi-php70
+    state: installed
+  with_items:
+    - php-mbstring
+    - php-devel
+    - php-opcache
+    - php-soap
+    - php-pdo
+    - php-mcrypt
+    - php-pecl-xdebug
+    - php-xml
+    - php-mysql
+    - php-gd
+    - php-intl
+    - php-json
+  notify:
+  - httpd restart

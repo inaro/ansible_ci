@@ -1,0 +1,20 @@
+- name: バーチャルホストを設定する
+  template:
+    src: default.j2
+    dest: /etc/httpd/conf.d/000-default.conf
+
+- name: ServerName を localhost に変更する
+  lineinfile:
+    dest: /etc/httpd/conf/httpd.conf
+    line: "ServerName localhost"
+
+- name: SELinux を無効化する
+  command: /sbin/setenforce 0
+  notify:
+    - httpd restart
+
+- name: apache を起動し、自動起動設定を有効にする
+  service:
+    name: httpd
+    state: started
+    enabled: true
